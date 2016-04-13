@@ -1,0 +1,27 @@
+{
+  "name": "presentation",
+  "homepage": "https://github.com/robfitzgerald/go-graph-presentation",
+  "authors": [
+    "Robert Fitzgerald <robfitzgerald@gmail.com>"
+  ],
+  "description": "graph theory graduate presentation on Go",
+  "main": "index.html",
+  "keywords": [
+    "Graph",
+    "Theory",
+    "Go"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "^0.2.18",
+    "angular": "1.5.3"
+  }
+}
