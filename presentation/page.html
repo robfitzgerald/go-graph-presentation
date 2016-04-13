@@ -3,7 +3,7 @@
 		{{page.title}}
 	</h3>
 	<div id="board"></div>
-	<div>
-		{{page.text}}
-	</div>
+	<p ng-repeat="line in page.text">
+		{{line}}
+	</p>
 </div>

@@ -29,26 +29,40 @@
 
 				var content = pageService[scope.number]
 					, board = content.board // || [{mark: '', positions: []}];
-					, size = content.boardSize
-					, jboard = new JGO.Board(size)
-					
+					, x, y;
 
-				board.forEach(function(player) {
-					player.positions.forEach(function(position) {
-						var coordinate = new JGO.Coordinate(parseCol(position, size));
-						jboard.setMark(coordinate, MARK[player.mark])
+				if (Number.isInteger(content.boardSize)) {
+					x = y = content.boardSize;
+				} else if (!!content.boardSize.x && !!content.boardSize.y) {
+					x = content.boardSize.x;
+					y = content.boardSize.y;
+				} else {
+					throw new TypeError('page.directive: incoming boardSize argument should be number or object w keys x, y. instead, got: ' + JSON.stringify(content.boardSize))
+				}
+
+				var jboard = new JGO.Board(x, y)
+
+				if (board) {
+					board.forEach(function(player) {
+						player.positions.forEach(function(position) {
+							var coordinate = new JGO.Coordinate(parseCol(position, y));
+							jboard.setType(coordinate, JGO[player.mark])
+						})
 					})
-				})
 
-				var jsetup = new JGO.Setup(jboard, JGO.BOARD.large);
+					var jsetup = new JGO.Setup(jboard, JGO.BOARD.large);
 
-				jsetup.create('board', function(canvas) {
-				  canvas.addListener('click', function(coord, ev) {
-				        var type = jboard.getType(coord);
-				        type = (type == JGO.WHITE) ? JGO.CLEAR : type + 1; // cycle
-				        jboard.setType(coord, type);
-				    });
-				});
+					jsetup.create('board', function(canvas) {
+					  canvas.addListener('click', function(coord, ev) {
+					        var type = jboard.getType(coord);
+					        type = (type == JGO.WHITE) ? JGO.CLEAR : type + 1; // cycle
+					        jboard.setType(coord, type);
+					    });
+					});
+				} else {
+					// nothing
+				}
+
 			}
 		}
 	}
@@ -61,13 +75,13 @@
 		vm.text = pageDetails.text;
 	}
 
-	function parseCol(position, size) {
+	function parseCol(position, colHeight) {
 		var first = position.substr(0,1)
 			, second = position.substr(1)
 		if (!Number.isInteger(Number.parseInt(second))) {
 			return position;
 		} else {
-			return first + SGFLetters[(size - Number.parseInt(second))];
+			return first + SGFLetters[(colHeight - Number.parseInt(second))];
 		}
 	}
 
