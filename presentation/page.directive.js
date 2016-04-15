@@ -26,7 +26,6 @@
 			controller: 'presentPageController',
 			controllerAs: 'page',
 			link: function(scope, element, attributes) {
-
 				var content = pageService[scope.number]
 					, board = content.board // || [{mark: '', positions: []}];
 					, x, y;
@@ -73,6 +72,10 @@
 			, pageDetails = pageService[pageNumber];
 		vm.title = pageDetails.title;
 		vm.text = pageDetails.text;
+		vm.math = pageDetails.math;
+		setTimeout(function () {
+    	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+		}, 5);
 	}
 
 	function parseCol(position, colHeight) {

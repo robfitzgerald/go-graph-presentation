@@ -3,7 +3,11 @@
 		{{page.title}}
 	</h3>
 	<div id="board"></div>
-	<p ng-repeat="line in page.text">
+	<div ng-repeat="line in page.text">
+		<p>{{line}}</p>
+	</div>
+	<div id="MathJaxExpression" ng-repeat="line in page.math">
 		{{line}}
-	</p>
+	</div>
+
 </div>

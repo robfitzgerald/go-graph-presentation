@@ -6,7 +6,7 @@
 
 	function boardService() {
 		return {
-			"fig1": [],
+			"empty": [],
 			"capture": [
 				{
 					mark: 'BLACK',

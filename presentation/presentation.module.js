@@ -1,6 +1,6 @@
 (function() {
-	
+
 	angular
-		.module('presentation', []);
+		.module('presentation', ['ui.router']);
 
 })();
