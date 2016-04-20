@@ -58,7 +58,7 @@
 				board: boardService.fig3,
 				boardSize: {x:5,y:3},
 				text: [
-					'The black block is safe, since white may not play in', 
+					'The black block is safe, since white may not play in ' +
 					'either of black\'s liberties due to the "no suicide" rule.'
 					],
 				math: []
