@@ -6,6 +6,7 @@
 
 	function pageService(boardService) {
 		var pageService = [
+////////////////////// TITLE PAGE /////////////////////////////////////////////
 			new Page({
 				title: '',
 				image: [
@@ -28,6 +29,7 @@
 					'University of Colorado Denver, April 21, 2016'
 				]
 			}),
+///////////////////////////////////////////////////////////////////////////////
 			new Page({
 				title: 'Figure 1',
 				board: boardService.empty,
@@ -65,7 +67,7 @@
 			}),
 			new Page({
 				text: [
-					'[MS01]    Thore Graepel, Mike Goutrie, Marco Kruger, Ralf Herbrich.  Learning On Graphs in the Game of Go.  Proceedings of the Ninth International Conference on Artificial Neural Networks.  Jan 2001.   ttp://research.microsoft.com/apps/pubs/default.aspx?id=65629',
+					'[MS01] Thore Graepel, Mike Goutrie, Marco Kruger, Ralf Herbrich.  Learning On Graphs in the Game of Go.  Proceedings of the Ninth International Conference on Artificial Neural Networks.  Jan 2001.   http://research.microsoft.com/apps/pubs/default.aspx?id=65629',
 					'[SAT15]   '
 				]
 			})

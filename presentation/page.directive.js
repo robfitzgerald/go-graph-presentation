@@ -72,7 +72,7 @@
 		vm.image = pageDetails.image;
 		setTimeout(function () {
     	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-		}, 5);
+ 		}, 5);
 	}
 
 	function parseCol(position, colHeight) {
