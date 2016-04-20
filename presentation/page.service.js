@@ -31,11 +31,23 @@
 			}),
 ///////////////////////////////////////////////////////////////////////////////
 			new Page({
+				title: 'Definition: Board',
+				text: ['A _Board_ is a M X N array of intersections.  Each intersection is a vertex of the board graph. There is an edge between two intersections just in case either the x coordinates are equal and the y coordinates differ by one, or the y coordinates are equal and the the x coordinates differ by one.']
+			}),
+			new Page({
 				title: 'Figure 1',
 				board: boardService.empty,
 				boardSize: {x:3,y:2},
 				text: ['An MxN board graph where M = 3, N = 2.'],
 				math: []
+			}),
+			new Page({
+				title: 'Definition: Arrangement',
+				text: ['An _Arrangement_ is a function from the set of intersections _I_ to the set of possible states of each intersection'],
+				math: [
+					'`gamma = {black,white,empty}`',
+					'`I |-> gamma`'
+				]
 			}),
 			new Page({
 				title: 'Capture',
@@ -84,9 +96,13 @@
 		this.title = opts.title || 'Modeling Go In A Graph-Theoretic Framework';
 		this.board = opts.board || null;
 		this.boardSize = opts.boardSize || null;
-		this.text = opts.text || '';
-		this.math = opts.math || '';
-		this.image = opts.image || [];
+		this.text = shouldBeArray(opts.text);
+		this.math = shouldBeArray(opts.math);
+		this.image = shouldBeArray(opts.image);
+	}
+
+	function shouldBeArray(input) {
+		return (Array.isArray(input) ? input : [])
 	}
 
 })();
