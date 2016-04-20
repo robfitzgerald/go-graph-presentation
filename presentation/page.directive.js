@@ -26,29 +26,38 @@
 			controller: 'presentPageController',
 			controllerAs: 'page',
 			link: function(scope, element, attributes) {
-
 				var content = pageService[scope.number]
 					, board = content.board // || [{mark: '', positions: []}];
-					, size = content.boardSize
-					, jboard = new JGO.Board(size)
-					
+					, x, y;
 
-				board.forEach(function(player) {
-					player.positions.forEach(function(position) {
-						var coordinate = new JGO.Coordinate(parseCol(position, size));
-						jboard.setMark(coordinate, MARK[player.mark])
+				if (Number.isInteger(content.boardSize)) {
+					x = y = content.boardSize;
+				} else if (!!content.boardSize && !!content.boardSize.x && !!content.boardSize.y) {
+					x = content.boardSize.x;
+					y = content.boardSize.y;
+				} else {
+					// no board.
+				}
+
+				if (board) {
+						var jboard = new JGO.Board(x, y)
+						board.forEach(function(player) {
+						player.positions.forEach(function(position) {
+							var coordinate = new JGO.Coordinate(parseCol(position, y));
+							jboard.setType(coordinate, JGO[player.mark])
+						})
 					})
-				})
 
-				var jsetup = new JGO.Setup(jboard, JGO.BOARD.large);
+					var jsetup = new JGO.Setup(jboard, JGO.BOARD.large);
 
-				jsetup.create('board', function(canvas) {
-				  canvas.addListener('click', function(coord, ev) {
-				        var type = jboard.getType(coord);
-				        type = (type == JGO.WHITE) ? JGO.CLEAR : type + 1; // cycle
-				        jboard.setType(coord, type);
-				    });
-				});
+					jsetup.create('board', function(canvas) {
+					  canvas.addListener('click', function(coord, ev) {
+					        var type = jboard.getType(coord);
+					        type = (type == JGO.WHITE) ? JGO.CLEAR : type + 1; // cycle
+					        jboard.setType(coord, type);
+					    });
+					});
+				}
 			}
 		}
 	}
@@ -59,15 +68,20 @@
 			, pageDetails = pageService[pageNumber];
 		vm.title = pageDetails.title;
 		vm.text = pageDetails.text;
+		vm.math = pageDetails.math;
+		vm.image = pageDetails.image;
+		setTimeout(function () {
+    	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+		}, 5);
 	}
 
-	function parseCol(position, size) {
+	function parseCol(position, colHeight) {
 		var first = position.substr(0,1)
 			, second = position.substr(1)
 		if (!Number.isInteger(Number.parseInt(second))) {
 			return position;
 		} else {
-			return first + SGFLetters[(size - Number.parseInt(second))];
+			return first + SGFLetters[(colHeight - Number.parseInt(second))];
 		}
 	}
 
