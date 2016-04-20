@@ -32,17 +32,16 @@
 
 				if (Number.isInteger(content.boardSize)) {
 					x = y = content.boardSize;
-				} else if (!!content.boardSize.x && !!content.boardSize.y) {
+				} else if (!!content.boardSize && !!content.boardSize.x && !!content.boardSize.y) {
 					x = content.boardSize.x;
 					y = content.boardSize.y;
 				} else {
-					throw new TypeError('page.directive: incoming boardSize argument should be number or object w keys x, y. instead, got: ' + JSON.stringify(content.boardSize))
+					// no board.
 				}
 
-				var jboard = new JGO.Board(x, y)
-
 				if (board) {
-					board.forEach(function(player) {
+						var jboard = new JGO.Board(x, y)
+						board.forEach(function(player) {
 						player.positions.forEach(function(position) {
 							var coordinate = new JGO.Coordinate(parseCol(position, y));
 							jboard.setType(coordinate, JGO[player.mark])
@@ -58,10 +57,7 @@
 					        jboard.setType(coord, type);
 					    });
 					});
-				} else {
-					// nothing
 				}
-
 			}
 		}
 	}
@@ -73,6 +69,7 @@
 		vm.title = pageDetails.title;
 		vm.text = pageDetails.text;
 		vm.math = pageDetails.math;
+		vm.image = pageDetails.image;
 		setTimeout(function () {
     	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 		}, 5);

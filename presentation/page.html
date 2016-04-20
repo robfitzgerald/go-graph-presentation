@@ -1,13 +1,29 @@
-<div>
-	<h3>
+<div layout="column">
+	<h3 layout="row" layout-align="center" class="md-display-2">
 		{{page.title}}
 	</h3>
-	<div id="board"></div>
-	<div ng-repeat="line in page.text">
-		<p>{{line}}</p>
+	<div layout="row" layout-align="center">
+		<div>
+			<div id="board"></div>			
+		</div>
 	</div>
-	<div id="MathJaxExpression" ng-repeat="line in page.math">
+	<div layout="row" layout-align="center">
+		<div ng-repeat="image in page.image" layout-margin>
+			<img ng-show="{{!!image.path}}" ng-src="images/{{image.path}}" alt="{{image.description}}" height="200">
+			<p class="md-caption md-hue-1" >{{image.description}}</p>
+		</div>
+	</div>
+	<div layout="row" layout-sm layout-align="center" ng-repeat="line in page.text">
+		<span class="md-content md-title">{{line}}</span>
+		<br/>
+	</div>
+	<div layout="row" layout-align="center" id="MathJaxExpression" ng-repeat="line in page.math">
 		{{line}}
 	</div>
+<!-- 	<md-button class="md-primary">primary</md-button>
+	<md-button class="md-primary md-hue-1">primary 1</md-button>
+	<md-button class="md-primary md-hue-2">primary 2</md-button>
+	<md-button class="md-primary md-hue-3">primary 3</md-button>
+	<md-button class="md-accent">accent</md-button> -->
 
 </div>

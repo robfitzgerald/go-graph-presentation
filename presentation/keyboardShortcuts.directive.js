@@ -5,9 +5,9 @@
 
 	angular
 		.module('presentation')
-		.directive('shortcuts', ['$state', keyboardShortcuts])
+		.directive('shortcuts', ['$state', 'pageService', keyboardShortcuts])
 
-		function keyboardShortcuts($state) {
+		function keyboardShortcuts($state, pageService) {
 		  return {
 		    restrict: 'E',
 		    replace: true,
@@ -16,12 +16,18 @@
 		          var key = e.which;
 		          switch (key) {
 		         	  case 109:  // 'm' -> go forward one page
-		         	  	$state.go('presentation', {pageNumber:(Number.parseInt(getCurrentPage()) + 1)})
+		         	  	var next = Number.parseInt(getCurrentPage()) + 1;
+		         	  	if (pageService.length > next) {
+		         	  		$state.go('presentation', {pageNumber:next})
+		         	  	}
 		         	  	break;
 	         	  	case 110:  // 'n' -> go back one page
-	         	  		$state.go('presentation', {pageNumber:(Number.parseInt(getCurrentPage()) - 1)})
+	         	  		var next = Number.parseInt(getCurrentPage()) - 1
+	         	  			, lowerBoundedNext = (next >= 0 ? next : 0)
+	         	  		$state.go('presentation', {pageNumber:lowerBoundedNext})
 	         	  		break;
-         				case 98:  // 'b' -> back to the top         				
+         				case 98:  // 'b' -> back to the top
+
 	         	  		$state.go('presentation', {pageNumber:0})
 	         	  		break;
          				case 114: // 'r' -> refresh
