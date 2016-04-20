@@ -13,9 +13,15 @@
 			<p class="md-caption md-hue-1" >{{image.description}}</p>
 		</div>
 	</div>
-	<div layout="row" layout-sm layout-align="center" ng-repeat="line in page.text">
-		<span class="md-content md-title">{{line}}</span>
-		<br/>
+	<div layout="row" layout-align="center">
+		<div flex="30"></div>
+		<div>
+			<div layout="column" class="md-content" layout-sm ng-repeat="line in page.text">
+				<span flex class="md-title">{{line}}</span>
+				<br/> 
+			</div>			
+		</div>
+		<div flex="30"></div>			
 	</div>
 	<div layout="row" layout-align="center" id="MathJaxExpression" ng-repeat="line in page.math">
 		{{line}}
