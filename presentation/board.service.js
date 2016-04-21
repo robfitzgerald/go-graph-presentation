@@ -27,6 +27,16 @@
 					positions: ["D4"]
 				}
 			],
+			"safeIsBetter": [
+				{
+					mark: 'BLACK',
+					positions: ["A3","B3","B2","B1","C2","D2","D1"]
+				},
+				{
+					mark: 'WHITE',
+					positions: ["E1","E2","E3","D3","C3","C4"]
+				}				
+			],
 			"capture": [
 				{
 					mark: 'BLACK',
@@ -165,6 +175,16 @@
 				{
 					mark: 'BLACK',
 					positions: ["A3","B3","C3","C2","D2","D4","D5","E2","F2","F3","G3","H3","I3","I4","I5"]
+				}
+			],
+			"goGetEm": [
+				{
+					mark: 'BLACK',
+					positions: ["A1","A2","A3","A4","A5","B5","B1","C1","C3","C5","D1","D3","D5","E1","E2","E3","E5"]
+				},
+				{
+					mark: 'WHITE',
+					positions: ["G1","G2","G3","G4","G5","H1","H5","I1","I5","J1","J5","K1","K2","K3","K4","K5"]
 				}
 			]
 		}
