@@ -72,6 +72,14 @@
 			}),
 			new Page({
 				title: 'Introduction',
+				text: 'It takes at a minimum 4 stones to surround a stone. The earliest point in the game that this can possibly occur is at the 7th move, if black captures the first place white stone.',
+				math: [
+					'`"This means we know the branching factor of the first 7 moves, before a capture is possible:"`',
+					'`361^(360^(359^(358^(357^(356^355))))) = "...well, I tried to compute it.."`'
+				]			
+			}),
+			new Page({
+				title: 'Introduction',
 				text: [
 					'In Japan, this game is called Go. In China, it is Weiqi. In Korea, it is Baduk.',
 					'The oldest surviving reference to Weiqi in China is in a passage of Confucius\' Analects, in 6th century B.C.',
@@ -79,8 +87,6 @@
 					'',
 				]
 			}),
-			new Page({}),
-
 			new Page({
 				title: 'Introduction',
 				text: [
