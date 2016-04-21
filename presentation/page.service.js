@@ -29,6 +29,49 @@
 					'A presentation by Rob Fitzgerald',
 					'CSCI 5408: Graph Theory with Dr. Ellen Gethner',
 					'University of Colorado Denver, April 21, 2016'
+				],
+				math: [
+					'`"keyboard navigation"`',
+					'`"m: page up"`',
+					'`"n: page down"`',
+					'`"b: beginning"`',
+					'`"e: end"`',
+					'`"r: refresh"`',
+					'`"p: previous"`'
+				]
+			}),
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///   BENSON: DEFINITIONS
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			new Page({
+				title: 'Introduction',
+				image: [
+					{
+						path: 'GoPainting.jpg',
+						description: 'http://apptimize.com/blog/2014/04/analytics-and-go/'
+					}
+				],
+				text: [
+					'"Go is a two-person perfect information game. Two players alternatively place a black and a white stone on some empty intersection of a 19 by 19 grid. Placed stones are never moved, but may be removed (called capture or killed) if they are completely surrounded. Basically every empty intersection is a legal move point.',
+					'"A Go game normally runs over 200 moves. Each turn offers about 250 choices of legal plays on average. Because of this high branching factor and difficult positional understanding, Go is considered a most challenging game for the machine."[CHEN]'
+				]
+			}),
+			new Page({
+				title: 'Introduction',
+				board: boardService.ko,
+				boardSize: 5,
+				text: [
+					'There are two major exceptions in the rules. If playing a stone would return us to a previous board configuration, it is called Ko (pictured above). That is not allowed, as it would introduce infinitely long games.',
+					'If a stone is played that is completely surrounded when it hits the board, it is called suicide. That is also not allowed.',
+				]
+			}),
+			new Page({
+				title: 'Introduction',
+				text: [
+					'From the website of the American Go Foundation, "This ancient proverb contains a profound truth.." [AG]',
+					'Step 1: Learn The Basics',
+					'Step 2: Lose 100 Games As Quickly As Possible',
+					'Step 3: Get Stronger'
 				]
 			}),
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,9 +80,9 @@
 			new Page({
 				title: 'A question',
 				board: boardService.illegalBoard,
-				boardSize: 9,
+				boardSize: 5,
 				text: [
-					'Based on these simple rules, what can we say about this configuration?'
+					'Based on the rules as described, what can we say about this configuration?'
 				]
 			}),
 			new Page({
@@ -269,7 +312,7 @@
 					'The small black-enclosed region above is not healthy for either black block.'
 				],
 				math: [
-					'`R nn E sube L(b)`'
+					'`if R nn E sube L(b) => H(R,b)`'
 				]
 			}),
 			new Page({
@@ -281,13 +324,13 @@
 					'Is it also safe?'
 				],
 				math: [
-					'`R nn E sube L(b)`'
+					'`if R nn E sube L(b) => H(R,b)`'
 				]			
 			}),
 			new Page({
 				title: 'Another Healthy Example',
 				board: boardService.bamboo,
-				boardSize: {x:5,y:4},
+				boardSize: {x:6,y:5},
 				text: [
 					'A Bamboo Joint (Take Fu)',
 					'"The name, like the \'knuckle\' on a stick of bamboo, comes from the strength of the connection. It is normally impossible to cut through it. Note that this shape doesn\'t normally occur without neighbouring enemy stones. The value of the bamboo joint depends largely on the context." [SENSEI]'
@@ -295,15 +338,115 @@
 			}),
 			new Page({
 				title: 'Definition: Neighboring blocks',
-				text: ''
+				board: boardService.neighbor,
+				boardSize: 5,
+				text: [
+					'NB(R) is the set of blocks neighboring region R.',
+					'let _R_ be the black-enclosed region at A1. Then the stone at E5 is not its neighbor, but, all other black stones are.'
+				],
+				math: '`NB(R)={b|Ext(b)nnR!=O/}`'
 			}),
+			new Page({
+				title: 'Definition: Vital',
+				board: boardService.vital,
+				boardSize: 4,
+				text: [
+					'If R is healthy for b, and all blocks neighboring R are in X, then R is _vital_ to b in X.'
+				],
+				math: [
+					'`"Let "X" be a set of "x"-blocks with "b in X`',
+					'`if H(R,b) ^^ NB(R) sube X => V(R,b,X)`'
+				]
+			}),
+			new Page({
+				title: 'Definition: Unconditionally Alive',
+				text: 'Let X be a set of X-blocks such that all b in X have two distinct vital regions. Then X is unconditionally alive.',
+				math: [
+					'`if EE R_1,R_2", " R_1 != R_2 ", "X sube B(x)", such that " b in X, V(R_i,b,x), i=1,2`',
+					'`=> X " is unconditionally alive."`'
+				]
+			}),
+			new Page({
+				title: 'Case 1',
+				text: 'Which properties does this board have?',
+				board: boardService.aliveCaseOne,
+				boardSize: {x:11,y:4},
+				math: [
+					'`bb "Healthy: " if R nn E sube L(b) => H(R,b)`',
+					'`bb "Vital: " if H(R,b) ^^ NB(R) sube X => V(R,b,X)`',
+					'`bb "Alive: " if EE R_1,R_2", " R_1 != R_2 ", "X sube B(x)", such that " b in X, V(R_i,b,x), i=1,2`',
+					'`=> X " is unconditionally alive."`',
+					'`"(R is a small x-enclosed region)"`'
+				]
+			}),
+			new Page({
+				title: 'Case 1 Answer',
+				board: boardService.aliveCaseOne,
+				boardSize: {x:11,y:4},
+				text: [
+					'from top to bottom, left to right, numbering black stone blocks 1,2, and 3:',
+					'The two black-enclosed regions are healthy. Both regions are vital to the large block of black stones, but for the single black stones, only one region is vital to each. Therefore, the three blocks b in X for the two black-enclosed regions are not unconditionally alive.'
+				],
+				math: [
+					'`H(R_1,b_1),H(R_1,b_2),H(R_2,b_1),H(R_2,b_3)`',
+					'`V(R_1,b_1,X),V(R_1,b_2,X),V(R_2,b_1,X),V(R_2,b_3,X)`',
+					'`"All blocks in X do not have two distinct vital regions."`'
+				]
+			}),
+			new Page({
+				title: 'Case 2',
+				text: 'Which properties does this board have?',
+				board: boardService.aliveCaseTwo,
+				boardSize: {x:11,y:5},
+				math: [
+					'`bb "Healthy: " if R nn E sube L(b) => H(R,b)`',
+					'`bb "Vital: " if H(R,b) ^^ NB(R) sube X => V(R,b,X)`',
+					'`bb "Alive: " if EE R_1,R_2", " R_1 != R_2 ", "X sube B(x)", such that " b in X, V(R_i,b,x), i=1,2`',
+					'`=> X " is unconditionally alive."`',
+					'`"(R is a small x-enclosed region)"`'
+				]
+			}),
+			new Page({
+				title: 'Case 2 Answer',
+				text: [
+					'black has one block which has three vital regions and is most definitely alive.'
+				],
+				board: boardService.aliveCaseTwo,
+				boardSize: {x:11,y:5},
+				math: [
+					''
+				]
+			}),
+			new Page({
+				title: 'Case 3',
+				text: 'Which properties does this board have?',
+				board: boardService.aliveCaseThree,
+				boardSize: {x:10,y:5},
+				math: [
+					'`bb "Healthy, Vital, Alive"`'
+				]
+			}),
+			new Page({
+				title: 'Case 3 Answer',
+				text: [
+					'',
+					'This situation is interesting as it is not "alive" for either player, and yet neither player can move without sacrificing its own pieces. It is called seki.',
+					'Seki, a Japanese go term adopted into English, means mutual life. In its simple form, it is a sort of symbiosis where two live groups share liberties which neither of them can fill without dying.[SENSEI]'
+				],
+				board: boardService.aliveCaseThree,
+				boardSize: {x:10,y:5},
+				math: [
+					'``'
+				]
+			}),			
 			new Page({
 				title: 'Modeling Go In A Graph-Theoretic Framework',
 				text: [
 					'References',
 					'[BENSON] David B. Benson. Life in the Game of Go. Information Sciences 10, 17-29. 1976.',
-					'[SENSEI] Sensei\'s Library. www.sensei.xmp.net/?BensonDefinitionOfUnconditionalLife.',
+					'[SENSEI] Sensei\'s Library. http://www.sensei.xmp.net.',
 					'[CHEN] Ken Chen, Zhixing Chen. Static analysis of life and death in the game of Go. Information Sciences 121, 113-134. 1999.',
+					'[AG] The American Go Foundation. http://agfgo.org',
 					'[GRAEPEL] Thore Graepel, Mike Goutrie, Marco Kruger, Ralf Herbrich.  Learning On Graphs in the Game of Go.  Proceedings of the Ninth International Conference on Artificial Neural Networks.  Jan 2001.',
 					'[SATO] Masafumi Sato, Koichi Anada, Masayoshi Tsutsumi. A Formulation of "Nakate" by a Graph Model for the Game of Go. 3rd International Conference on Applied Computing and Information Technology/2nd International Conference on Computational Science and Intelligence. 2015.'
 				]
