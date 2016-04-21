@@ -9,7 +9,7 @@
 	</div>
 	<div layout="row" layout-align="center">
 		<div ng-repeat="image in page.image" layout-margin>
-			<img ng-show="{{!!image.path}}" ng-src="images/{{image.path}}" alt="{{image.description}}" height="200">
+			<img ng-show="{{!!image.path}}" ng-src="images/{{image.path}}" alt="{{image.description}}" height="{{image.height}}">
 			<p class="md-caption md-hue-1" >{{image.description}}</p>
 		</div>
 	</div>

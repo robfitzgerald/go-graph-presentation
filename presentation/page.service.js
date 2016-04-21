@@ -14,15 +14,18 @@
 				image: [
 					{
 						path: 'goban-sensei.jpg',
-						description: 'http://senseis.xmp.net/'				
+						description: 'http://senseis.xmp.net/',
+						height: 200			
 					},
 					{
 						path: 'goban-usgo.jpg',
-						description: 'http://usgo.org'						
+						description: 'http://usgo.org',
+						height: 200					
 					},
 					{
 						path: 'go-table-ultraboardgames.jpg',
-						description: 'http://ultraboardgames.com/'						
+						description: 'http://ultraboardgames.com/',
+						height: 200						
 					}
 				],				
 				text: [
@@ -31,13 +34,14 @@
 					'University of Colorado Denver, April 21, 2016'
 				],
 				math: [
-					'`"keyboard navigation"`',
-					'`"m: page up"`',
-					'`"n: page down"`',
-					'`"b: beginning"`',
-					'`"e: end"`',
-					'`"r: refresh"`',
-					'`"p: previous"`'
+				// '`"keyboard navigation: n m b e r p"`'
+					// '`"keyboard navigation"`',
+					// '`"m: page up"`',
+					// '`"n: page down"`',
+					// '`"b: beginning"`',
+					// '`"e: end"`',
+					// '`"r: refresh"`',
+					// '`"p: previous"`'
 				]
 			}),
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +52,8 @@
 				image: [
 					{
 						path: 'GoPainting.jpg',
-						description: 'http://apptimize.com/blog/2014/04/analytics-and-go/'
+						description: 'http://apptimize.com/blog/2014/04/analytics-and-go/',
+						height: 200
 					}
 				],
 				text: [
@@ -61,17 +66,26 @@
 				board: boardService.ko,
 				boardSize: 5,
 				text: [
-					'There are two major exceptions in the rules. If playing a stone would return us to a previous board configuration, it is called Ko (pictured above). That is not allowed, as it would introduce infinitely long games.',
+					'There are two major exceptions in the rules. If playing a stone would return us to a previous board configuration, it is called Ko (example above). That is not allowed, as it would introduce infinitely long games.',
 					'If a stone is played that is completely surrounded when it hits the board, it is called suicide. That is also not allowed.',
 				]
 			}),
 			new Page({
 				title: 'Introduction',
 				text: [
-					'From the website of the American Go Foundation, "This ancient proverb contains a profound truth.." [AG]',
-					'Step 1: Learn The Basics',
-					'Step 2: Lose 100 Games As Quickly As Possible',
-					'Step 3: Get Stronger'
+					'In Japan, this game is called Go. In China, it is Weiqi. In Korea, it is Baduk.',
+					'The oldest surviving reference to Weiqi in China is in a passage of Confucius\' Analects, in 6th century B.C.',
+					'Encyclopedia Britannica suggests the game may date back to the 2nd millenium B.C.[BRIT]',
+					'',
+				]
+			}),
+			new Page({}),
+
+			new Page({
+				title: 'Introduction',
+				text: [
+					'My research proposal was to find novel examples of graph theoretical models of the game of Go, and to present them here, alongside _any models I could create on my own_.',
+					'Nice dream. But, I achieve my first goal, by tracing back through more recent papers to a common reference paper from 1976, which I will present here.'
 				]
 			}),
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +96,17 @@
 				board: boardService.illegalBoard,
 				boardSize: 5,
 				text: [
-					'Based on the rules as described, what can we say about this configuration?'
+					'Based on the rules we know so far, what can we say about this configuration?'
+				]
+			}),
+			new Page({
+				title: 'Another question',
+				board: boardService.safeIsBetter,
+				boardSize: {x:8,y:4},
+				text: [
+					'What about this board? Can you infer anything about which player has the stronger position?',
+					'Can we say anything about which player\'s pieces have a likelyhood to survive the game?',
+					'Let\'s start piecing together some tools that will help us answer this question.'
 				]
 			}),
 			new Page({
@@ -184,7 +208,7 @@
 				math: [
 					'`R = {A2,B3,B2,B1,C2}`',
 					'`Int(R) = {B2}`',
-					'`cc "border" = R // Int(R)`'
+					'`cc "border" = R \\\\ Int(R)`'
 				]
 			}),			
 			new Page({
@@ -287,7 +311,7 @@
 					'`I " the intersections on the board"`',
 					'`b " a block of state-connected intersections"`',
 					'`R " a region, where "Int(R) " and " Ext(R) " are functions"`',
-					'`"border" = R // Int(R) " intersections on R that are not interior"`',
+					'`"border" = R \\\\ Int(R) " intersections on R that are not interior"`',
 					'`L(b)=Ext(b) nn E " liberties of block b"`',					
 				]
 			}),
@@ -438,17 +462,93 @@
 				math: [
 					'``'
 				]
-			}),			
+			}),	
+			new Page({
+				title: 'Another take on board representation',
+				text: [
+					'Our next set of ideas comes much later, and provides another novel way to identify life.',
+					'We will build from our board another entire board representation.',
+					'Intuition: if a _block_ is an equivalence relation, then why can\'t we depict the board as a graph of blocks? Would this provide any added benefit?'
+				]
+			}),		
+			new Page({
+				title: 'Definition: Common Fate Graph [GRAEPEL]',
+				text: [
+					'Blocks of the same color that belong to the same chain will always have a _common fate_.',
+					'We will transform our board by way of a transform function ```T()```:',
+				],
+				math: [
+										'`"Let " B = " our board, " P = V(B) and E = E(B)`',
+										'`"Given two nodes " p,p\' in P " that are neighbors " {p,p\'} sube N(p) uu N(p\') ","`',
+										'`"and that have the same non-empty label from " P ", perform the following transformation:"`',
+										'`P |-> P \\\\ {p\'} " to melt the node p\' into p"`',
+										'`E |-> (E \\\\ {{p\',p\'\'} in E }) uu {{p,p\'\'} : {p\',p\'\'} in E} " to connect the remaining node p to those nodes p\'\' formerly connected to p\'."`'
+				]
+			}),
+			new Page({
+				title: 'Question for the jury',
+				text: [
+					'Did he just spell out **edge contraction**?',
+					'(like, G\' = G * e ?)'
+				],
+				math: '(if not, we will skip the next slide)'
+			}),
+			new Page({
+				title: 'Common Fate Graph by Edge Contraction',
+				text: [
+					'Our transform function ```T()``` can be defined as:'
+				],
+				math: [
+					'`"In our board " B " For each state in " gamma ", for each block " b ", for each intersection i,"`',
+					'`AA j in N(i),`',
+					'`B\' = B ** ij`',
+					'`"..should result in a graph where all intersections that were neighbors have been collapsed into a single intersection."`'
+				]
+			}),
+			new Page({
+				title: 'Common Fate Graph',
+				image: [
+					{
+						path: 'learningOnGraphs-fig1.png',
+						description: '[GRAEPEL]'
+					}
+				],
+				text: [
+					'A Common Fate graph derived from a board.'
+				]
+			}),
+			new Page({
+				title: 'Conclusion',
+				board: boardService.goGetEm,
+				boardSize: {x:11,y:5},
+				text: [
+					'Mapping Go to Graph Theory works without much struggle. This ancient game has interesting mathematical properties, and research in the study of Graph-based representation of Go is ongoing.'
+				]
+			}),
+			new Page({
+				title: 'Conclusion',
+				text: [
+					'If you enjoyed this presentation, and are interested in learning Go, consider this. From the website of the American Go Foundation, "This ancient proverb contains a profound truth.." [AG]',
+					'Step 1: Learn The Basics',
+					'Step 2: Lose 100 Games As Quickly As Possible',
+					'Step 3: Get Stronger'
+				],
+				math: [
+					'`"a list of online Go game servers can be found here: http://senseis.xmp.net/?GoServers"`'
+				]
+			}),
 			new Page({
 				title: 'Modeling Go In A Graph-Theoretic Framework',
 				text: [
 					'References',
-					'[BENSON] David B. Benson. Life in the Game of Go. Information Sciences 10, 17-29. 1976.',
+					'[BENSON] David B. Benson. _Life in the Game of Go_. Information Sciences 10, 17-29. 1976.',
+					'[CHEN] Ken Chen, Zhixing Chen. _Static analysis of life and death in the game of Go_. Information Sciences 121, 113-134. 1999.',
+					'[GRAEPEL] Thore Graepel, Mike Goutrie, Marco Kruger, Ralf Herbrich.  _Learning On Graphs in the Game of Go_.  Proceedings of the Ninth International Conference on Artificial Neural Networks.  Jan 2001.',
+					// '[SATO] Masafumi Sato, Koichi Anada, Masayoshi Tsutsumi. A Formulation of "Nakate" by a Graph Model for the Game of Go. 3rd International Conference on Applied Computing and Information Technology/2nd International Conference on Computational Science and Intelligence. 2015.'
+					// https://webdocs.cs.ualberta.ca/~games/go/compgo_biblio/compgo_biblio.html
+					'[BRIT] Encyclopedia Britannica. "Go (Game)". http://www.britannica.com/topic/go-game.',
 					'[SENSEI] Sensei\'s Library. http://www.sensei.xmp.net.',
-					'[CHEN] Ken Chen, Zhixing Chen. Static analysis of life and death in the game of Go. Information Sciences 121, 113-134. 1999.',
 					'[AG] The American Go Foundation. http://agfgo.org',
-					'[GRAEPEL] Thore Graepel, Mike Goutrie, Marco Kruger, Ralf Herbrich.  Learning On Graphs in the Game of Go.  Proceedings of the Ninth International Conference on Artificial Neural Networks.  Jan 2001.',
-					'[SATO] Masafumi Sato, Koichi Anada, Masayoshi Tsutsumi. A Formulation of "Nakate" by a Graph Model for the Game of Go. 3rd International Conference on Applied Computing and Information Technology/2nd International Conference on Computational Science and Intelligence. 2015.'
 				]
 			}),
 			new Page({
