@@ -18,12 +18,11 @@
 		<div>
 			<div layout="column" class="md-content" layout-sm ng-repeat="line in page.text">
 				<span btf-markdown="line" class="md-title" flex></span>
-				<br/> 
 			</div>			
 		</div>
 		<div flex="30"></div>			
 	</div>
-	<div layout="row" layout-align="center" id="MathJaxExpression" ng-repeat="line in page.math">
+	<div layout="row" layout-align="center" layout-margin id="MathJaxExpression" ng-repeat="line in page.math">
 		{{line}}
 	</div>
 <!-- 	<md-button class="md-primary">primary</md-button>
