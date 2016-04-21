@@ -1,7 +1,7 @@
 (function() {
 
 	angular
-		.module('presentation', ['ui.router', 'ngMaterial'])
+		.module('presentation', ['ui.router', 'ngMaterial', 'btford.markdown'])
 		.config(function($mdThemingProvider) {
 			$mdThemingProvider.theme('default')
 				.primaryPalette('brown', {

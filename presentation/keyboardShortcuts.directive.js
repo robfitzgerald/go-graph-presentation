@@ -5,15 +5,16 @@
 
 	angular
 		.module('presentation')
-		.directive('shortcuts', ['$state', 'pageService', keyboardShortcuts])
+		.directive('shortcuts', ['$state', '$stateParams', 'pageService', keyboardShortcuts])
 
-		function keyboardShortcuts($state, pageService) {
+		function keyboardShortcuts($state, $stateParams, pageService) {
 		  return {
 		    restrict: 'E',
 		    replace: true,
 		    link: function postLink(scope, element, attributes) {
 		      angular.element(document).on('keypress', function(e){
-		          var key = e.which;
+		          var key = e.which
+		          // console.log('key pressed: ' + key)
 		          switch (key) {
 		         	  case 109:  // 'm' -> go forward one page
 		         	  	var next = Number.parseInt(getCurrentPage()) + 1;
@@ -27,13 +28,20 @@
 	         	  		$state.go('presentation', {pageNumber:lowerBoundedNext})
 	         	  		break;
          				case 98:  // 'b' -> back to the top
-
 	         	  		$state.go('presentation', {pageNumber:0})
 	         	  		break;
          				case 114: // 'r' -> refresh
 	         	  		$state.reload();
 	         	  		break;
+         	  		case 101: // 'e' -> end
+         	  			$state.go('presentation', {pageNumber:(pageService.length - 1)})
+         	  			break;
+       	  			case 112: // 'p' -> previous
+       	  				console.log('pressed p. previous: ' + scope.previous)
+       	  				$state.go('presentation', {pageNumber:scope.previous})
+       	  				break;
          			}
+         			scope.previous = $stateParams.pageNumber;
 		       });
 		    }
 		  };
