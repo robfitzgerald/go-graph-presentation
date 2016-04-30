@@ -35,13 +35,13 @@
 				],
 				math: [
 				// '`"keyboard navigation: n m b e r p"`'
-					// '`"keyboard navigation"`',
-					// '`"m: page up"`',
-					// '`"n: page down"`',
-					// '`"b: beginning"`',
-					// '`"e: end"`',
-					// '`"r: refresh"`',
-					// '`"p: previous"`'
+					'`"keyboard navigation"`',
+					'`"m: page up"`',
+					'`"n: page down"`',
+					'`"b: beginning"`',
+					'`"e: end"`',
+					'`"r: refresh"`',
+					'`"p: previous"`'
 				]
 			}),
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -565,7 +565,8 @@
 					'[Angular Material](https://material.angularjs.org): Web UI framework',
 					'[JGOBoard](https://jgoboard.com): Photorealistic Go board JavaScript library',
 					'[MathJax.js](https://www.mathjax.org): Mathematics typesetting JavaScript library',
-					'[ASCIIMath](https://asciimath.org): Mathematics markup language'
+					'[ASCIIMath](https://asciimath.org): Mathematics markup language',
+					'[GitHub Page](https://github.com/robfitzgerald/go-graph-presentation): the source code for this presentation'
 				]
 			})
 		];
