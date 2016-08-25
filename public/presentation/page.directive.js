@@ -22,7 +22,7 @@
 			scope: {
 				number: '=number'
 			},
-			templateUrl: '/presentation/page.html',
+			templateUrl: 'presentation/page.html',
 			controller: 'presentPageController',
 			controllerAs: 'page',
 			link: function(scope, element, attributes) {
